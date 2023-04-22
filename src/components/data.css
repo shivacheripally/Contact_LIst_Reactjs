@@ -1,8 +1,9 @@
-.data{
+/* CSS styles for contact data and its container */
+.data {
   text-align: center;
 }
 
-.contact-data{
+.contact-data {
   margin: auto;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -20,13 +21,14 @@
   gap: 10px;
 }
 
-.icons{
+/* CSS styles for contact data icons */
+.icons {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 25px;
 }
 
-.icons:hover{
+.icons:hover {
   cursor: pointer;
 }
