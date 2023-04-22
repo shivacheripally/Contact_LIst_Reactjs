@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {handleUpdateContact} from './index.js';
-import './Edit.css';
+// import './Edit.css';
 
 export function Edit(props) {
   const {id,list,setList} = props;
@@ -15,11 +15,21 @@ export function Edit(props) {
     };
     handleUpdateContact(id,list,setList,updatedContactData);
   };
-
+  const styles = {
+    form:{
+      padding: "10px",
+      display:"flex",
+      flexDirection: "column",
+      gap:"10px",
+      textAlign:"center",
+      alignItems:"center",
+      justifyContent:"center",
+    }
+  }
   return (
-    <div>
+    <div >
       <h4>updating</h4>
-      <form onSubmit={clickUpdate}>
+      <form style={styles.form} onSubmit={clickUpdate}>
         <input
           onChange={(event) => setName(event.target.value)}
           type="text"

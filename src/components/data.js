@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {handleDeleteClick,handleAddClick,App,Edit} from './index.js'; 
+import {handleDeleteClick,handleAddClick,App,Edit} from './index.js';
 import './data.css';
 
 const url = 'https://jsonplaceholder.typicode.com/users';
