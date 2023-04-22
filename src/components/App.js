@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import './style.css';
 
 export default function App(props) {
-  // console.log(props);
   const {addClick} = props;
-  // console.log(addClick);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
 

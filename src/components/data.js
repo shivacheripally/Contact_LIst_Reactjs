@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import {handleDeleteClick} from './DeleteContact.js';
 import {handleAddClick} from './AddContact.js';
 import App from './App';
+import {Edit} from './Edit.js';
 import './data.css';
 
 const url = 'https://jsonplaceholder.typicode.com/users';
 
 export function ContactList() {
   const [list, setList] = useState([]);
+  const [isEdit,setIsEdit] = useState(false);
+  const [editId,setEditId] = useState('');
 
   useEffect(() => {
     fetch(url)
@@ -26,67 +29,20 @@ export function ContactList() {
   }, []);
 
   const addClick = (name,phone) => {
+    console.log("name,phone",name,phone);
     const id = Date.now();
     handleAddClick(name,phone,id,list,setList);
   }
-  // const addClick = (name, phone) => {
-  //   console.log('add', name, phone);
-  //   const addUrl = 'https://example.com/api/contacts';
-  //   fetch(addUrl, {
-  //     method: 'POST',
-  //     body: JSON.stringify({ name, phone }),
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     }
-  //   })
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error('Network response was not ok');
-  //       }
-  //       console.log('Contact has been added');
-  //       const id = Date.now();
-  //       console.log("id",id);
-  //       setList([...list, { name, phone, id }]);
-  //     })
-  //     .catch((error) => console.error('Error adding data:', error));
-  // };
 
-  const editClick = (index) => {
-    console.log("edit",index);
+  const editClick = (id) => {
+    console.log("edit",id);
+    setIsEdit(!isEdit);
+    setEditId(id);
   };
 
   const deleteClick = (id) => {
     handleDeleteClick(id, list, setList);
   }
-  
-  const updateContact = (id, updatedContactData) => {
-    fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(updatedContactData)
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      console.log(`Contact with id ${id} has been updated`);
-      // update the list of contacts after updating the contact
-      const updatedList = list.map(contact => {
-        if (contact.id === id) {
-          return {
-            ...contact,
-            ...updatedContactData
-          };
-        } else {
-          return contact;
-        }
-      });
-      setList(updatedList);
-    })
-    .catch(error => console.error('Error updating data:', error));
-  }  
 
   return (
     <div className="data">
@@ -99,7 +55,7 @@ export function ContactList() {
           <div className="icons">
             <span>
               <i
-                onClick = {() => {editClick(index)}}
+                onClick = {() => {editClick(contact.id)}}
                 style={{ color: 'orange' }}
                 className="fa-solid fa-pen-to-square"
               ></i>
@@ -111,6 +67,7 @@ export function ContactList() {
               className="fa-solid fa-trash"></i>
             </span>
           </div>
+          {isEdit && editId === contact.id && <Edit />}
         </div>
       ))}
     </div>
