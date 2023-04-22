@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import {DeleteContact} from './DeleteContact.js';
-
+import {handleDeleteClick} from './DeleteContact.js';
+import {handleAddClick} from './AddContact.js';
+import App from './App';
 import './data.css';
 
 const url = 'https://jsonplaceholder.typicode.com/users';
 
-function ContactList() {
-  
+export function ContactList() {
   const [list, setList] = useState([]);
-  const [remove, setRemove] = useState(false);
-  // const deleteUrl = `https://example.com/api/contacts/${id}`;
+
   useEffect(() => {
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
         const contacts = data.map((obj) => {
-          // console.log(obj)
           return {
             name: obj.username,
             phone: obj.phone,
@@ -27,31 +25,72 @@ function ContactList() {
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
 
+  const addClick = (name,phone) => {
+    const id = Date.now();
+    handleAddClick(name,phone,id,list,setList);
+  }
+  // const addClick = (name, phone) => {
+  //   console.log('add', name, phone);
+  //   const addUrl = 'https://example.com/api/contacts';
+  //   fetch(addUrl, {
+  //     method: 'POST',
+  //     body: JSON.stringify({ name, phone }),
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   })
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error('Network response was not ok');
+  //       }
+  //       console.log('Contact has been added');
+  //       const id = Date.now();
+  //       console.log("id",id);
+  //       setList([...list, { name, phone, id }]);
+  //     })
+  //     .catch((error) => console.error('Error adding data:', error));
+  // };
+
   const editClick = (index) => {
     console.log("edit",index);
-    setRemove(true)
   };
 
   const deleteClick = (id) => {
+    handleDeleteClick(id, list, setList);
+  }
+  
+  const updateContact = (id, updatedContactData) => {
     fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
-      method: 'DELETE'
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedContactData)
     })
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      console.log(`Contact with id ${id} has been deleted`);
-      // update the list of contacts after deleting the contact
-      const updatedList = list.filter(contact => contact.id !== id);
+      console.log(`Contact with id ${id} has been updated`);
+      // update the list of contacts after updating the contact
+      const updatedList = list.map(contact => {
+        if (contact.id === id) {
+          return {
+            ...contact,
+            ...updatedContactData
+          };
+        } else {
+          return contact;
+        }
+      });
       setList(updatedList);
     })
-    .catch(error => console.error('Error deleting data:', error));
-  }
-  
-  
+    .catch(error => console.error('Error updating data:', error));
+  }  
 
   return (
-    <div>
+    <div className="data">
+      <App addClick={addClick}/>
       <h1>Contacts</h1>
       {list.map((contact, index) => (
         <div key={`index-${index}`} className="contact-data">
@@ -72,11 +111,8 @@ function ContactList() {
               className="fa-solid fa-trash"></i>
             </span>
           </div>
-          {remove && <DeleteContact index={index}/> }
         </div>
       ))}
     </div>
   );
 }
-
-export default ContactList;

@@ -1,23 +1,21 @@
-function createPost(name, phone, id) {
-  return fetch('https://jsonplaceholder.typicode.com/posts', {
+export const handleAddClick = (name,phone,id,list,setList) => {
+  console.log('add', name, phone);
+  const addUrl = 'https://example.com/api/contacts';
+  fetch(addUrl, {
     method: 'POST',
-    body: JSON.stringify({ name, phone, id }),
+    body: JSON.stringify({ name, phone }),
     headers: {
-      'Content-type': 'application/json; charset=UTF-8',
-    },
+      'Content-Type': 'application/json'
+    }
   })
     .then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      return response.json();
+      console.log('Contact has been added');
+      const id = Date.now();
+      console.log("id",id);
+      setList([...list, { name, phone, id }]);
     })
-    .then((json) => {
-      return json;
-    })
-    .catch((error) => {
-      console.error('There was an error:', error);
-      throw error;
-    });
-}
- export default createPost;
+    .catch((error) => console.error('Error adding data:', error));
+};

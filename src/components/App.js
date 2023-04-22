@@ -1,24 +1,16 @@
 import React, { useState } from 'react';
 import './style.css';
-import ContactList from './data';
-import createPost from './AddContact.js';
 
-export default function App() {
+export default function App(props) {
+  // console.log(props);
+  const {addClick} = props;
+  // console.log(addClick);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
 
   const addContact = (e) => {
     e.preventDefault();
-    console.log('adding contact', name, phone);
-    const id = Date.now();
-    createPost(name, phone, id)
-      .then((response) => {
-        console.log('response', response);
-        // do something with the response
-      })
-      .catch((error) => {
-        console.error('There was an error:', error);
-      });
+    addClick(name,phone);
   };
 
   return (
@@ -47,7 +39,6 @@ export default function App() {
 
         <input className="submit" type="submit" value="submit" />
       </form>
-      <ContactList />
     </div>
   );
 }

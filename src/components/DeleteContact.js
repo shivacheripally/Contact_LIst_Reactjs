@@ -1,21 +1,16 @@
-import React,{useEffect} from 'react';
-const url = 'https://jsonplaceholder.typicode.com/users';
-
-export function DeleteContact(props){
-  console.log("delete contact");
-  useEffect(() => {
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data, props);
-      })
-      .catch(error => console.error('Error fetching data:', error));
-  }, [props]);
-  
-
-  return(
-    <div>
-      <p>props.index:{props.index}</p>
-    </div>
-  );
+export const handleDeleteClick = (id, list, setList) => {
+  fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
+    method: 'DELETE'
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    console.log(`Contact with id ${id} has been deleted`);
+    // update the list of contacts after deleting the contact
+    const updatedList = list.filter(contact => contact.id !== id);
+    // console.log("updatedList",updatedList);
+    setList(updatedList);
+  })
+  .catch(error => console.error('Error deleting data:', error));
 }

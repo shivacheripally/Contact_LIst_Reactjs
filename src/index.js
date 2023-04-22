@@ -1,13 +1,12 @@
 import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-
-import App from './components/App';
+import {ContactList} from './components/data.js';
 
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
 
 root.render(
   <StrictMode>
-    <App />
+    <ContactList />
   </StrictMode>
 );
