@@ -2,6 +2,7 @@ import React,{useEffect} from 'react';
 const url = 'https://jsonplaceholder.typicode.com/users';
 
 export function DeleteContact(props){
+  console.log("delete contact");
   useEffect(() => {
     fetch(url)
       .then(response => response.json())
