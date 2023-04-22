@@ -1,0 +1,28 @@
+.contact-data{
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  min-height: 100px;
+  max-width: 400px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  background-color: aliceblue;
+  border: 1px solid black;
+  border-radius: 5px;
+  gap: 10px;
+}
+
+.icons{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+}
+
+.icons:hover{
+  cursor: pointer;
+}
