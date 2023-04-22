@@ -1,4 +1,4 @@
-export const handleUpdateContact = (id, updatedContactData) => {
+export const handleUpdateContact = (id,list,setList,updatedContactData) => {
   fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
     method: 'PUT',
     headers: {

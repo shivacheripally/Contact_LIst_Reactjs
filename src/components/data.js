@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {handleDeleteClick} from './DeleteContact.js';
-import {handleAddClick} from './AddContact.js';
-import App from './App';
-import {Edit} from './Edit.js';
+import {handleDeleteClick,handleAddClick,App,Edit} from './index.js'; 
 import './data.css';
 
 const url = 'https://jsonplaceholder.typicode.com/users';
@@ -35,7 +32,6 @@ export function ContactList() {
   }
 
   const editClick = (id) => {
-    console.log("edit",id);
     setIsEdit(!isEdit);
     setEditId(id);
   };
@@ -67,7 +63,7 @@ export function ContactList() {
               className="fa-solid fa-trash"></i>
             </span>
           </div>
-          {isEdit && editId === contact.id && <Edit />}
+          {isEdit && editId === contact.id && <Edit id={contact.id} list={list} setList={setList}/>}
         </div>
       ))}
     </div>
